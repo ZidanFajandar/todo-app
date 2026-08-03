@@ -1,18 +1,9 @@
 import db from "./db";
+import type { Task, NewTask } from "./types";
 
-export interface Task {
-  id?: number;
-  title: string;
-  description: string;
-  topic: string;
-  due_date: string;
-  status: "Todo" | "In-Progress" | "Complete";
-  archived?: number;
-  created_at?: string;
-  updated_at?: string;
-}
 
-export function createTask(task: Task) {
+
+export function createTask(task: NewTask) {
   const stmt = db.prepare(`
     INSERT INTO Task
       (title, description, topic, due_date, status, archived, created_at, updated_at)
@@ -31,4 +22,15 @@ export function createTask(task: Task) {
     now,
     now
   );
+}
+
+export function getActiveTasks(): Task[] {
+  const stmt = db.prepare(`
+    SELECT *
+    FROM Task
+    WHERE archived = 0
+    ORDER BY due_date ASC
+  `);
+
+  return stmt.all() as Task[];
 }
