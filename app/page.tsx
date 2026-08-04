@@ -1,12 +1,23 @@
 import TaskForm from "@/components/TaskForm";
 import TaskCard from "@/components/TaskCard";
+import SortBar from "@/components/SortBar";
 import {
   getActiveTasks,
   getArchivedTasks,
 } from "@/lib/taskRepository";
 
-export default async function Home() {
-  const activeTasks = getActiveTasks();
+interface HomeProps {
+  searchParams: Promise<{
+    sort?: "due_date" | "topic" | "status";
+  }>;
+}
+
+export default async function Home({ searchParams }: HomeProps) {
+  const params = await searchParams;
+
+  const sort = params.sort ?? "due_date";
+
+  const activeTasks = getActiveTasks(sort);
   const archivedTasks = getArchivedTasks();
 
   return (
@@ -17,6 +28,7 @@ export default async function Home() {
 
       <hr />
 
+      <SortBar currentSort={sort} />
       <h2>Active Tasks</h2>
 
       {activeTasks.length === 0 ? (
