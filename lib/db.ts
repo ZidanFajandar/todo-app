@@ -2,7 +2,16 @@ import Database from "better-sqlite3";
 import fs from "fs";
 import path from "path";
 
-const dbPath = path.join(process.cwd(), "database", "todo.db");
+const dbName =
+  process.env.NODE_ENV === "test"
+    ? "test.db"
+    : "todo.db";
+
+const dbPath = path.join(
+  process.cwd(),
+  "database",
+  dbName
+);
 const schemaPath = path.join(process.cwd(), "database", "schema.sql");
 
 // Open (or create) the database

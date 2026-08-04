@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
+  "build": "next build",
+  "start": "next start",
+  "lint": "eslint",
+  "test": "NODE_ENV=test vitest",
+  "test:run": "NODE_ENV=test vitest run"
   },
   "dependencies": {
     "better-sqlite3": "^13.0.2",
