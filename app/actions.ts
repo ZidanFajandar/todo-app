@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { createTask } from "@/lib/taskRepository";
+import { createTask, archiveTask } from "@/lib/taskRepository";
 
 export async function createTaskAction(formData: FormData) {
   const title = formData.get("title")?.toString().trim();
@@ -21,6 +21,14 @@ export async function createTaskAction(formData: FormData) {
     due_date,
     status: status as "Todo" | "In-Progress" | "Complete",
   });
+
+  revalidatePath("/");
+}
+
+export async function archiveTaskAction(formData: FormData) {
+  const id = Number(formData.get("id"));
+
+  archiveTask(id);
 
   revalidatePath("/");
 }

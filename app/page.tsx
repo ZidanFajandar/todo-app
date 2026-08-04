@@ -1,28 +1,41 @@
 import TaskForm from "@/components/TaskForm";
 import TaskCard from "@/components/TaskCard";
-import { getActiveTasks } from "@/lib/taskRepository";
+import {
+  getActiveTasks,
+  getArchivedTasks,
+} from "@/lib/taskRepository";
 
 export default async function Home() {
-  const tasks = getActiveTasks();
+  const activeTasks = getActiveTasks();
+  const archivedTasks = getArchivedTasks();
 
   return (
-    <main>
+    <main style={{ padding: "2rem" }}>
       <h1>Todo App</h1>
 
       <TaskForm />
 
       <hr />
 
-      <h2>Tasks</h2>
+      <h2>Active Tasks</h2>
 
-      {tasks.length === 0 ? (
-        <p>No tasks yet.</p>
+      {activeTasks.length === 0 ? (
+        <p>No active tasks.</p>
       ) : (
-        tasks.map((task) => (
-          <TaskCard
-            key={task.id}
-            task={task}
-          />
+        activeTasks.map((task) => (
+          <TaskCard key={task.id} task={task} />
+        ))
+      )}
+
+      <hr />
+
+      <h2>Archived Tasks</h2>
+
+      {archivedTasks.length === 0 ? (
+        <p>No archived tasks.</p>
+      ) : (
+        archivedTasks.map((task) => (
+          <TaskCard key={task.id} task={task} />
         ))
       )}
     </main>
