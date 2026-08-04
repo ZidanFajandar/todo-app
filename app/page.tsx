@@ -19,6 +19,7 @@ export default async function Home({ searchParams }: HomeProps) {
 
   const activeTasks = getActiveTasks(sort);
   const archivedTasks = getArchivedTasks();
+  
 
   return (
     <main style={{ padding: "2rem" }}>
