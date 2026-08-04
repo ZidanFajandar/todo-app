@@ -24,12 +24,14 @@ export function createTask(task: NewTask) {
   );
 }
 
-export function getActiveTasks(): Task[] {
+export function getActiveTasks(
+  sortBy: "due_date" | "topic" | "status" = "due_date"
+): Task[] {
   const stmt = db.prepare(`
     SELECT *
     FROM Task
     WHERE archived = 0
-    ORDER BY due_date ASC
+    ORDER BY ${sortBy} ASC
   `);
 
   return stmt.all() as Task[];

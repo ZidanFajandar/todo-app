@@ -1,5 +1,6 @@
 import type { Task } from "@/lib/types";
 import ArchiveButton from "./ArchiveButton";
+import EditButton from "./EditButton";
 
 interface TaskCardProps {
   task: Task;
@@ -34,6 +35,7 @@ export default function TaskCard({ task }: TaskCardProps) {
       </p>
 
       {task.archived === 0 && <ArchiveButton id={task.id} />}
+      {task.archived === 0 && <EditButton task={task} />}
     </div>
   );
 }
